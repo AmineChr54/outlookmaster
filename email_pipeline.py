@@ -6,7 +6,8 @@ from email.mime.text import MIMEText
 # --- Login details ---
 IMAP_SERVER = "imap.gmail.com"   # replace with your provider
 EMAIL_ACCOUNT = "masteroutlook101@gmail.com"
-PASSWORD = "ycup rkgh ydpl bamx"   # Gmail/Outlook requires app passwords
+PASSWORD = "ycup rkgh ydpl bamx"   # Gmail/Outlook requires app 
+REAL_PASSWORD = "outlookmaster123456789"
 
 # --- Connect to the server ---
 def connect_to_email():
