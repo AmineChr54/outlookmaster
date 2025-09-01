@@ -32,16 +32,30 @@ def connect_to_email():
         exit(1)
 
 # --- Select mailbox ---
-# mail.select("inbox")
+def get_mailboxes(mail):
+    status, mailboxes = mail.list()
+    if status == "OK":
+        mailbox_names = []
+        for mbox in mailboxes:
+            # mbox is a bytes object, decode and parse the mailbox name
+            parts = mbox.decode().split(' "/" ')
+            if len(parts) == 2:
+                mailbox_names.append(parts[1].replace('"', ''))
+        return mailbox_names
+    else:
+        print("Failed to list mailboxes.")
+        return []
 
 # --- Search for all emails ---
-def search_emails(mail):
+def search_emails(mail: imaplib.IMAP4_SSL):
+    mail.select(get_mailboxes(mail)[0])  # Select the first mailbox (usually INBOX)
     status, messages = mail.search(None, "ALL")
     if status != "OK":
         print("No messages found!")
     else:
         email_ids = messages[0].split()
         print(f"Total emails: {len(email_ids)}")
+        print(email_ids)
         for num in email_ids:
             status, data = mail.fetch(num, "(RFC822)")
             if status != "OK":
@@ -65,7 +79,9 @@ def search_emails(mail):
             print(body)
             print("-" * 40)
 
+# This function sends an email using Gmail's SMTP server with SSL encryption.
 def send_email(to_address, subject, body):
+
     msg = MIMEText(body)
     msg["Subject"] = subject
     msg["From"] = EMAIL_ACCOUNT
@@ -82,5 +98,6 @@ def send_email(to_address, subject, body):
         print(f"Unexpected error: {e}")
 
 # Example usage:
-# search_emails()
-send_email("lolocheep54@gmail.com", "Test Subject 3", "Hello, this is a test email.")
+mail = connect_to_email()
+search_emails(mail)
+# send_email("lolocheep54@gmail.com", "Test Subject 3", "Hello, this is a test email.")
