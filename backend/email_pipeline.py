@@ -2,12 +2,14 @@ import imaplib
 import email
 import smtplib
 from email.mime.text import MIMEText
+from dotenv import load_dotenv
+import os
 
-# --- Login details ---
-IMAP_SERVER = "imap.gmail.com"   # replace with your provider
-EMAIL_ACCOUNT = "masteroutlook101@gmail.com"
-PASSWORD = "ycup rkgh ydpl bamx"   # Gmail/Outlook requires app 
-REAL_PASSWORD = "outlookmaster123456789"
+# --- Get from local environment account details ---
+load_dotenv()
+EMAIL_ACCOUNT = os.getenv("EMAIL_ACCOUNT")
+PASSWORD = os.getenv("EMAIL_APP_PASSWORD")
+IMAP_SERVER = "imap.gmail.com"
 
 # --- Connect to the server ---
 def connect_to_email():
