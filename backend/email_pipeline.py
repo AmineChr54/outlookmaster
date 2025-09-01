@@ -2,12 +2,24 @@ import imaplib
 import email
 import smtplib
 from email.mime.text import MIMEText
+from dotenv import load_dotenv
+import os
 
-# --- Login details ---
-IMAP_SERVER = "imap.gmail.com"   # replace with your provider
-EMAIL_ACCOUNT = "masteroutlook101@gmail.com"
-PASSWORD = "ycup rkgh ydpl bamx"   # Gmail/Outlook requires app 
-REAL_PASSWORD = "outlookmaster123456789"
+""" 
+IMPORTANT: Make sure to set the following environment variables in your .env file
+1- you need to create a file named .env in the root directory of your project (without a file name, just .env)
+2- add in your .env file the following lines:
+EMAIL_ACCOUNT=your_email@gmail.com
+EMAIL_APP_PASSWORD=your_app_password
+
+This whole process will be automated in the future - through a user-friendly interface.
+"""
+
+# --- Get from local environment account details ---
+load_dotenv()
+EMAIL_ACCOUNT = os.getenv("EMAIL_ACCOUNT")
+PASSWORD = os.getenv("EMAIL_APP_PASSWORD")
+IMAP_SERVER = "imap.gmail.com"
 
 # --- Connect to the server ---
 def connect_to_email():
