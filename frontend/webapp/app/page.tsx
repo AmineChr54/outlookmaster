@@ -17,3 +17,7 @@ export default function Home() {
     </div>
   );
 }
+// frontend/webapp/app/page.tsx (or wherever you render messages)
+import EmailsClient from "./components/MessageList";
+
+

@@ -1,29 +1,30 @@
 # backend/email_api.py
 from flask import Flask, jsonify
-from email_pipeline import connect_to_email, search_emails
+from flask_cors import CORS
+from email_pipeline import connect_to_email, fetch_emails
+import email
+
 
 app = Flask(__name__)
+# allow your frontend origin (dev)
+CORS(app, origins=["http://localhost:3000"])
 
-@app.route('/api/emails')
+@app.route("/api/emails")
 def get_emails():
     mail = connect_to_email()
-    mail.select("inbox")
-    status, messages = mail.search(None, "ALL")
-    emails = []
-    if status == "OK":
-        email_ids = messages[0].split()
-        for num in email_ids:
-            status, data = mail.fetch(num, "(RFC822)")
-            if status != "OK":
-                continue
-            msg = email.message_from_bytes(data[0][1])
-            emails.append({
-                "subject": msg["subject"],
-                "from": msg["from"],
-                "date": msg["date"],
-                "preview": msg.get_payload(decode=True).decode(errors="ignore")[:100]  # first 100 chars
-            })
+    try:
+        emails = fetch_emails(mail, mailbox="INBOX", limit=50)
+    finally:
+        try:
+            mail.logout()
+        except:
+            pass
     return jsonify(emails)
 
+
+@app.route("/api/health")
+def health():
+    return jsonify({"status": "ok"})
+
 if __name__ == "__main__":
-    app.run(port=5000)
+    app.run(host="0.0.0.0", port=5000, debug=True)
