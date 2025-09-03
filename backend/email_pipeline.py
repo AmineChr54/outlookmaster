@@ -72,6 +72,12 @@ def fetch_emails(mail: imaplib.IMAP4_SSL, mailbox="INBOX", limit=50):
     if limit:
         email_ids = email_ids[-limit:]
 
+    category_map = {
+        "INBOX": "Inbox",
+        "[Gmail]/Spam": "Spam",
+        "[Gmail]/Drafts": "Drafts"
+    }
+
     emails = []
     # iterate newest-first
     for num in reversed(email_ids):
@@ -89,6 +95,7 @@ def fetch_emails(mail: imaplib.IMAP4_SSL, mailbox="INBOX", limit=50):
             "from": sender,
             "date": date,
             "preview": body[:200],
-            "body": body
+            "body": body,
+            "category": category_map.get(mailbox, mailbox)
         })
     return emails

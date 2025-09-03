@@ -2,8 +2,7 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
 from email_pipeline import connect_to_email, fetch_emails
-import email
-
+import email 
 
 app = Flask(__name__)
 # allow your frontend origin (dev)
