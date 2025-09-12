@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Email, Mailbox } from "./types";
-import MessageListItem from "./MessageListItem";
-import MessageDetail from "./MessageDetail";
+import MessageListLeft from "./MessageListLeft";
+import MessageListRight from "./MessageListRight";
 
 // Mailboxes are now managed in Sidebar
 
@@ -18,6 +18,10 @@ const MessageList: React.FC<MessageListProps> = ({ mailbox }) => {
   const [selected, setSelected] = useState<string | null>(null);
   const [reply, setReply] = useState("");
   const [sending, setSending] = useState(false);
+  // Resizable panel state
+  const [panelWidth, setPanelWidth] = useState<number>(340); // px
+  const [isResizing, setIsResizing] = useState(false);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     async function load() {
@@ -37,6 +41,28 @@ const MessageList: React.FC<MessageListProps> = ({ mailbox }) => {
     }
     load();
   }, [mailbox]);
+
+  // Mouse event handlers for resizing
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isResizing) return;
+      const minWidth = 220;
+      const maxWidth = 600;
+      let newWidth = e.clientX - (panelRef.current?.getBoundingClientRect().left || 0);
+      if (newWidth < minWidth) newWidth = minWidth;
+      if (newWidth > maxWidth) newWidth = maxWidth;
+      setPanelWidth(newWidth);
+    };
+    const handleMouseUp = () => setIsResizing(false);
+    if (isResizing) {
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseup', handleMouseUp);
+    }
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isResizing]);
 
   if (loading)
     return (
@@ -73,47 +99,44 @@ const MessageList: React.FC<MessageListProps> = ({ mailbox }) => {
 
   return (
     <div
-      className="flex bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 w-full"
-      style={{ height: 'calc(100vh - 15 * 0.25rem)' }} // 15 * 0.25rem is the header height
+  className="flex bg-gray-900 rounded-lg shadow-md overflow-hidden border border-gray-800 w-full"
+      style={{ height: 'calc(100vh - 15 * 0.25rem)' }}
+      ref={panelRef}
     >
       {/* Left column: mailbox buttons and email list */}
-      <div className="flex-1 min-w-0 border-r overflow-y-auto" style={{ maxWidth: '30vw' }}>
-        {/* Sidebar now handles mailbox selection */}
-        <ul className="divide-y divide-gray-100">
-          {emails.map((email) => (
-            <MessageListItem
-              key={email.id}
-              email={email}
-              selected={selected === email.id}
-              onClick={() => setSelected(email.id)}
-            />
-          ))}
-        </ul>
+      <div
+        style={{ width: panelWidth, minWidth: 220, maxWidth: 600 }}
+        className="h-full"
+      >
+        <MessageListLeft
+          emails={emails}
+          selected={selected}
+          onSelect={setSelected}
+        />
       </div>
+      {/* Resizer */}
+      <div
+        className={`w-px cursor-col-resize bg-gray-300 hover:bg-blue-400 transition-colors duration-150 ${isResizing ? 'bg-blue-400' : ''}`}
+        onMouseDown={() => setIsResizing(true)}
+        style={{ zIndex: 10 }}
+        title="Drag to resize"
+      />
       {/* Right column: email details and reply panel */}
-      <div className="flex-1 min-w-0 bg-gray-50 p-8 overflow-y-auto flex flex-col">
-        {selectedEmail ? (
-          <MessageDetail
-            email={selectedEmail}
-            reply={reply}
-            sending={sending}
-            setReply={setReply}
-            onClose={() => setSelected(null)}
-            onSend={() => {
-              setSending(true);
-              setTimeout(() => {
-                alert("Reply sent!");
-                setReply("");
-                setSending(false);
-              }, 1000);
-            }}
-          />
-        ) : (
-          <div className="flex items-center justify-center h-full text-gray-400">
-            Select an email to view its content
-          </div>
-        )}
-      </div>
+      <MessageListRight
+        selectedEmail={selectedEmail}
+        reply={reply}
+        sending={sending}
+        setReply={setReply}
+        onClose={() => setSelected(null)}
+        onSend={() => {
+          setSending(true);
+          setTimeout(() => {
+            alert("Reply sent!");
+            setReply("");
+            setSending(false);
+          }, 1000);
+        }}
+      />
     </div>
   );
 };

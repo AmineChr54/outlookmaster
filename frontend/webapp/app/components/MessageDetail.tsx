@@ -19,15 +19,15 @@ export interface MessageDetailProps {
  * @param props MessageDetailProps
  */
 const MessageDetail: React.FC<MessageDetailProps> = ({ email, reply, sending, setReply, onClose, onSend }) => (
-  <section aria-label="Email details" className="flex flex-col h-full">
+  <section aria-label="Email details" className="flex flex-col h-full text-white">
     {/* Subject and close button */}
     <div className="flex items-center justify-between mb-2">
-      <h3 className="text-xl font-bold text-blue-700 flex items-center gap-2">
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 inline-block text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 01-8 0" /></svg>
+      <h3 className="text-xl font-bold text-white flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 inline-block text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 01-8 0" /></svg>
         {email.subject}
       </h3>
       <button
-        className="text-gray-400 hover:text-gray-700 text-xl font-bold cursor-pointer"
+        className="text-yellow-400 hover:text-yellow-200 text-xl font-bold cursor-pointer"
         onClick={onClose}
         aria-label="Close email details"
         type="button"
@@ -36,20 +36,29 @@ const MessageDetail: React.FC<MessageDetailProps> = ({ email, reply, sending, se
       </button>
     </div>
     {/* Date */}
-    <div className="text-xs text-gray-400 mb-1 flex items-center gap-1">
+  <div className="text-xs text-white mb-1 flex items-center gap-1">
       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10m-7 4h4" /></svg>
       {email.date}
     </div>
     {/* Sender info */}
-    <div className="text-xs text-gray-500 mb-2 flex items-center gap-1">
+  <div className="text-xs text-white mb-2 flex items-center gap-1">
       <img src={`https://ui-avatars.com/api/?name=${encodeURIComponent(email.from || 'User')}&background=random`} alt="avatar" className="w-6 h-6 rounded-full border" />
       {email.from}
     </div>
-    {/* Email body or preview */}
-    <div className="text-base text-gray-800 whitespace-pre-line mt-2 mb-6">{email.body || email.preview}</div>
+    {/* Email body or preview, render HTML if available */}
+  <div className="text-base text-white whitespace-pre-line mt-2 mb-6">
+      {email.html ? (
+        <div className="prose prose-invert max-w-none" style={{ color: 'white' }}>
+          <style>{`* { color: white !important; }`}</style>
+          <div dangerouslySetInnerHTML={{ __html: email.html }} />
+        </div>
+      ) : (
+        email.body || email.preview
+      )}
+    </div>
     {/* Reply button scrolls to reply panel */}
     <button
-      className="mb-4 cursor-pointer bg-blue-100 text-blue-700 px-3 py-1 rounded font-semibold hover:bg-blue-200 transition self-start"
+      className="mb-4 cursor-pointer bg-yellow-900 text-yellow-200 px-3 py-1 rounded font-semibold hover:bg-yellow-800 transition self-start"
       onClick={() => {
         const replyPanel = document.getElementById('reply-panel');
         if (replyPanel) replyPanel.scrollIntoView({ behavior: 'smooth' });

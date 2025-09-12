@@ -38,26 +38,40 @@ def _decode_mime_words(s):
     return "".join(out)
 
 
-def _get_text_from_msg(msg):
-    # return first useful text/plain content
+
+def _get_text_and_html_from_msg(msg):
+    """
+    Returns (plain, html) tuple. If only one is found, the other is None.
+    """
+    plain = None
+    html = None
     if msg.is_multipart():
         for part in msg.walk():
             content_type = part.get_content_type()
             disp = part.get('Content-Disposition')
-            if content_type == 'text/plain' and disp is None:
+            if content_type == 'text/plain' and disp is None and plain is None:
                 payload = part.get_payload(decode=True)
                 if payload:
-                    return payload.decode(errors="ignore")
+                    plain = payload.decode(errors="ignore")
+            elif content_type == 'text/html' and disp is None and html is None:
+                payload = part.get_payload(decode=True)
+                if payload:
+                    html = payload.decode(errors="ignore")
         # fallback: try any text/* part
-        for part in msg.walk():
-            if part.get_content_type().startswith('text/'):
-                payload = part.get_payload(decode=True)
-                if payload:
-                    return payload.decode(errors="ignore")
-        return ""
+        if plain is None:
+            for part in msg.walk():
+                if part.get_content_type().startswith('text/'):
+                    payload = part.get_payload(decode=True)
+                    if payload:
+                        plain = payload.decode(errors="ignore")
+                        break
     else:
         payload = msg.get_payload(decode=True)
-        return payload.decode(errors="ignore") if payload else ""
+        if msg.get_content_type() == 'text/html':
+            html = payload.decode(errors="ignore") if payload else None
+        else:
+            plain = payload.decode(errors="ignore") if payload else None
+    return plain, html
 
 
 def fetch_emails(mail: imaplib.IMAP4_SSL, mailbox="INBOX", limit=50):
@@ -88,14 +102,16 @@ def fetch_emails(mail: imaplib.IMAP4_SSL, mailbox="INBOX", limit=50):
         subject = _decode_mime_words(msg.get("subject"))
         sender = _decode_mime_words(msg.get("from"))
         date = msg.get("date")
-        body = _get_text_from_msg(msg)
+        plain, html = _get_text_and_html_from_msg(msg)
+        body = plain or ""
         emails.append({
             "id": num.decode() if isinstance(num, bytes) else str(num),
             "subject": subject,
             "from": sender,
             "date": date,
-            "preview": body[:200],
+            "preview": (plain or html or "")[:200],
             "body": body,
+            "html": html,
             "category": category_map.get(mailbox, mailbox)
         })
     return emails
