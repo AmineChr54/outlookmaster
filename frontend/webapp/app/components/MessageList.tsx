@@ -66,9 +66,9 @@ const MessageList: React.FC<MessageListProps> = ({ mailbox }) => {
 
   if (loading)
     return (
-      <div className="flex flex-col items-center justify-center h-full w-full">
+      <div className="flex flex-col items-center justify-center h-full w-full bg-bg">
         <svg
-          className="animate-spin h-12 w-12 text-blue-500 mb-4"
+          className="animate-spin h-12 w-12 text-primary mb-4"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
@@ -87,19 +87,19 @@ const MessageList: React.FC<MessageListProps> = ({ mailbox }) => {
             d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
           />
         </svg>
-        <span className="text-blue-600 font-semibold text-lg">
+        <span className="text-title font-semibold text-lg">
           Please wait a second...
         </span>
       </div>
     );
-  if (error) return <div>Error: {error}</div>;
-  if (!emails.length) return <div>No emails found</div>;
+  if (error) return <div className="text-error">Error: {error}</div>;
+  if (!emails.length) return <div className="text-muted">No emails found</div>;
 
   const selectedEmail = emails.find((e) => e.id === selected) || null;
 
   return (
     <div
-  className="flex bg-gray-900 rounded-lg shadow-md overflow-hidden border border-gray-800 w-full"
+      className="flex bg-bg rounded-lg shadow-md overflow-hidden border border-bg w-full font-main"
       style={{ height: 'calc(100vh - 15 * 0.25rem)' }}
       ref={panelRef}
     >

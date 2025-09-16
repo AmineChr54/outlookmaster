@@ -40,12 +40,12 @@ const MAILBOXES: { key: Mailbox; label: string; icon: React.ReactNode }[] = [
 
 const Sidebar: React.FC<SidebarProps> = ({ collapsed = false, mailbox, setMailbox }) => {
   return (
-  <aside className={`bg-gray-900 text-gray-200 border-r border-gray-800 flex flex-col p-4 gap-4 transition-all duration-300 ${collapsed ? 'w-20' : 'w-64'}`}>
+  <aside className={`bg-bg text-main font-main border-r border-border flex flex-col p-4 gap-4 transition-all duration-300 ${collapsed ? 'w-20' : 'w-64'}`}>
       <nav className="flex flex-col gap-2">
         {MAILBOXES.map((item) => (
           <button
             key={item.key}
-            className={`flex items-center gap-3 px-3 py-2 rounded font-medium transition-all duration-300 cursor-pointer ${collapsed ? 'justify-center px-0' : 'text-left'} ${mailbox === item.key ? 'bg-yellow-900 text-yellow-200' : 'text-gray-200 hover:bg-yellow-800'}`}
+            className={`flex items-center gap-3 px-3 py-2 rounded font-medium transition-all duration-300 cursor-pointer ${collapsed ? 'justify-center px-0' : 'text-left'} ${mailbox === item.key ? 'bg-primary text-bg' : 'text-main hover:bg-accent'}`}
             title={collapsed ? item.label : undefined}
             onClick={() => setMailbox(item.key)}
           >
@@ -55,7 +55,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed = false, mailbox, setMailbo
         ))}
       </nav>
       <div className="mt-auto">
-        <button className={`w-full cursor-pointer bg-yellow-800 text-yellow-100 py-2 rounded hover:bg-yellow-900 font-semibold transition-all duration-300 ${collapsed ? 'px-0 flex justify-center' : ''}`} title={collapsed ? "New Message" : undefined}>
+  <button className={`w-full cursor-pointer bg-primary text-bg py-2 rounded hover:bg-accent font-semibold transition-all duration-300 ${collapsed ? 'px-0 flex justify-center' : ''}`} title={collapsed ? "New Message" : undefined}>
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
           {!collapsed && <span className="ml-2">New Message</span>}
         </button>

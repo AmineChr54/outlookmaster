@@ -19,7 +19,7 @@ const MessageListRight: React.FC<MessageListRightProps> = ({
   onClose,
   onSend,
 }) => (
-  <div className="flex-1 min-w-0 bg-gray-950 p-8 overflow-y-auto flex flex-col text-yellow-100">
+  <div className="flex-1 min-w-0 bg-bg p-8 overflow-y-auto flex flex-col text-main">
     {selectedEmail ? (
       <MessageDetail
         email={selectedEmail}
@@ -30,7 +30,7 @@ const MessageListRight: React.FC<MessageListRightProps> = ({
         onSend={onSend}
       />
     ) : (
-      <div className="flex items-center justify-center h-full text-gray-400">
+      <div className="flex items-center justify-center h-full text-muted">
         Select an email to view its content
       </div>
     )}

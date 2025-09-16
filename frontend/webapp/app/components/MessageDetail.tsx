@@ -19,15 +19,15 @@ export interface MessageDetailProps {
  * @param props MessageDetailProps
  */
 const MessageDetail: React.FC<MessageDetailProps> = ({ email, reply, sending, setReply, onClose, onSend }) => (
-  <section aria-label="Email details" className="flex flex-col h-full text-white">
+  <section aria-label="Email details" className="flex flex-col h-full text-main font-main">
     {/* Subject and close button */}
     <div className="flex items-center justify-between mb-2">
-      <h3 className="text-xl font-bold text-white flex items-center gap-2">
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 inline-block text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 01-8 0" /></svg>
+      <h3 className="text-xl font-bold text-title flex items-center gap-2 font-heading">
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 inline-block text-title" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 01-8 0" /></svg>
         {email.subject}
       </h3>
       <button
-        className="text-yellow-400 hover:text-yellow-200 text-xl font-bold cursor-pointer"
+        className="text-title hover:text-accent text-xl font-bold cursor-pointer"
         onClick={onClose}
         aria-label="Close email details"
         type="button"
@@ -36,20 +36,20 @@ const MessageDetail: React.FC<MessageDetailProps> = ({ email, reply, sending, se
       </button>
     </div>
     {/* Date */}
-  <div className="text-xs text-white mb-1 flex items-center gap-1">
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10m-7 4h4" /></svg>
+    <div className="text-xs text-date mb-1 flex items-center gap-1">
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 inline-block text-date" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10m-7 4h4" /></svg>
       {email.date}
     </div>
     {/* Sender info */}
-  <div className="text-xs text-white mb-2 flex items-center gap-1">
+    <div className="text-xs text-emailsender mb-2 flex items-center gap-1">
       <img src={`https://ui-avatars.com/api/?name=${encodeURIComponent(email.from || 'User')}&background=random`} alt="avatar" className="w-6 h-6 rounded-full border" />
       {email.from}
     </div>
     {/* Email body or preview, render HTML if available */}
-  <div className="text-base text-white whitespace-pre-line mt-2 mb-6">
+    <div className="text-base text-main whitespace-pre-line mt-2 mb-6 font-body">
       {email.html ? (
-        <div className="prose prose-invert max-w-none" style={{ color: 'white' }}>
-          <style>{`* { color: white !important; }`}</style>
+        <div className="prose prose-invert max-w-none" style={{ color: 'var(--text-main)' }}>
+          <style>{`* { color: var(--text-main) !important; }`}</style>
           <div dangerouslySetInnerHTML={{ __html: email.html }} />
         </div>
       ) : (
@@ -58,7 +58,7 @@ const MessageDetail: React.FC<MessageDetailProps> = ({ email, reply, sending, se
     </div>
     {/* Reply button scrolls to reply panel */}
     <button
-      className="mb-4 cursor-pointer bg-yellow-900 text-yellow-200 px-3 py-1 rounded font-semibold hover:bg-yellow-800 transition self-start"
+      className="mb-4 cursor-pointer bg-primary text-bg px-3 py-1 rounded font-semibold hover:bg-accent transition self-start font-main"
       onClick={() => {
         const replyPanel = document.getElementById('reply-panel');
         if (replyPanel) replyPanel.scrollIntoView({ behavior: 'smooth' });
@@ -71,7 +71,7 @@ const MessageDetail: React.FC<MessageDetailProps> = ({ email, reply, sending, se
       <label htmlFor="reply-textarea" className="sr-only">Reply</label>
       <textarea
         id="reply-textarea"
-        className="w-full border rounded p-2 mb-2 text-gray-800"
+        className="w-full border rounded p-2 mb-2 text-main bg-input-bg border-input-border font-body"
         rows={4}
         placeholder="Type your reply..."
         value={reply}

@@ -1,26 +1,72 @@
 @import "tailwindcss";
 
+/* Theme variables for Tailwind + CSS variable integration */
+
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Brand and background */
+  --color-primary: 255 214 10;    /* #ffd60a - strong yellow accent */
+  --color-bg: 18 18 20;           /* #121214 - very dark grey */
+  --color-accent: 255 234 107;    /* #ffea6b - soft yellow accent */
+  --color-secondary: 38 38 38;    /* #262626 - mid grey */
+  --color-muted: 113 113 122;     /* #71717a - muted grey */
+  --color-border: 39 39 42;       /* #27272a - border grey */
+  --color-card: 24 24 27;         /* #18181b - card bg */
+  --color-hover: 255 234 107;     /* #ffea6b - hover yellow */
+  --color-active: 255 214 10;     /* #ffd60a - active yellow */
+  --color-success: 34 197 94;     /* #22c55e */
+  --color-error: 239 68 68;       /* #ef4444 */
+  --color-warning: 255 214 10;    /* #ffd60a */
+  --color-info: 113 113 122;      /* #71717a */
+  --color-input-bg: 24 24 27;     /* #18181b */
+  --color-input-border: 63 63 70; /* #3f3f46 */
+  --color-scrollbar: 63 63 70;    /* #3f3f46 */
+
+  /* Text roles */
+  --text-title: 255 0 255;      /* white */
+  --text-date: 255 214 10;           /* #ffd60a - yellow */
+  --text-emailsender: 255 234 107;   /* #ffea6b - soft yellow */
+  --text-main: 232 232 236;       /* #e8e8ec - light grey */
+  --text-secondary: 180 180 190;     /* #b4b4be - secondary grey */
+  --text-muted: 113 113 122;         /* #71717a - muted grey */
+
+  /* Fonts */
+  --font-main: 'Inter', 'Segoe UI', Arial, sans-serif;
+  --font-heading: 'Inter', 'Segoe UI', Arial, sans-serif;
+  --font-body: 'Inter', 'Segoe UI', Arial, sans-serif;
+  --font-mono: 'Fira Mono', 'Menlo', 'Monaco', monospace;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+.dark {
+  --color-bg: 12 12 14;             /* #0c0c0e - even darker bg */
+  --color-primary: 255 214 10;      /* #ffd60a - yellow accent */
+  --color-accent: 255 234 107;      /* #ffea6b - soft yellow */
+  --color-secondary: 38 38 38;      /* #262626 - mid grey */
+  --color-muted: 82 82 91;          /* #52525b - muted grey */
+  --color-border: 39 39 42;         /* #27272a - border grey */
+  --color-card: 24 24 27;           /* #18181b - card bg */
+  --color-hover: 255 234 107;       /* #ffea6b - hover yellow */
+  --color-active: 255 214 10;       /* #ffd60a - active yellow */
+  --color-success: 22 163 74;       /* #16a34a */
+  --color-error: 220 38 38;         /* #dc2626 */
+  --color-warning: 255 214 10;      /* #ffd60a */
+  --color-info: 113 113 122;        /* #71717a */
+  --color-input-bg: 24 24 27;       /* #18181b */
+  --color-input-border: 82 82 91;   /* #52525b */
+  --color-scrollbar: 63 63 70;      /* #3f3f46 */
+
+  --text-title: 255 255 255;         /* white */
+  --text-date: 255 214 10;           /* #ffd60a - yellow */
+  --text-emailsender: 255 234 107;   /* #ffea6b - soft yellow */
+  --text-main: 212 212 216;          /* #d4d4d8 - light grey */
+  --text-secondary: 180 180 190;     /* #b4b4be - secondary grey */
+  --text-muted: 82 82 91;            /* #52525b - muted grey */
+
+  --font-main: 'Inter', 'Segoe UI', Arial, sans-serif;
+  --font-heading: 'Inter', 'Segoe UI', Arial, sans-serif;
+  --font-body: 'Inter', 'Segoe UI', Arial, sans-serif;
+  --font-mono: 'Fira Mono', 'Menlo', 'Monaco', monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
