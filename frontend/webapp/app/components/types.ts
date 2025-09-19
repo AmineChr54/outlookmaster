@@ -1,4 +1,3 @@
-// Type definitions for email objects
 export type Email = {
   id: string;
   subject: string;
