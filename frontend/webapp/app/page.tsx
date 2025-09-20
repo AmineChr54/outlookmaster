@@ -31,12 +31,13 @@ export default function Home() {
         </div>
       </div>
     {/* Login Page */}
-    <div className="font-sans min-h-screen bg-gray-50 flex flex-col">
-      <header className="bg-blue-700 text-white p-4 text-xl font-bold shadow flex items-center gap-4 h-15">
-        <span>Welcome, {loggedInUser}</span>
-      </div>
-      <main className="flex-1 flex items-center justify-center">
-        <p className="text-lg">✅ You are logged in with Google!</p>
+      <div className="font-sans min-h-screen bg-gray-50 flex flex-col">
+        <header className="bg-blue-700 text-white p-4 text-xl font-bold shadow flex items-center gap-4 h-15">
+          <span>Welcome, {loggedInUser}</span>
+        </header>
+        <div className="flex-1 flex items-center justify-center">
+          <p className="text-lg">✅ You are logged in with Google!</p>
+        </div>
       </div>
     </div>
   );

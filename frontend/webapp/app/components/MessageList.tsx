@@ -6,10 +6,13 @@ import MessageListLeft from "./MessageListLeft";
 import MessageListRight from "./MessageListRight";
 
 interface MessageListProps {
-  emails: Email[];
+  mailbox: Mailbox;
 }
 
-const MessageList: React.FC<MessageListProps> = ({ emails }) => {
+const MessageList: React.FC<MessageListProps> = ({ mailbox }) => {
+  const [emails, setEmails] = useState<Email[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
   const [reply, setReply] = useState("");
   const [sending, setSending] = useState(false);
