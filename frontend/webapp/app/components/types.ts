@@ -5,6 +5,7 @@ export type Email = {
   date: string;
   preview: string;
   body?: string;
+  html?: string;
   category?: string;
 };
 
