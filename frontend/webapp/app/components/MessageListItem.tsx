@@ -7,9 +7,14 @@ export interface MessageListItemProps {
   onClick: () => void;
 }
 
-const MessageListItem: React.FC<MessageListItemProps> = ({ email, selected, onClick }) => (
+const MessageListItem: React.FC<MessageListItemProps> = ({
+  email,
+  selected,
+  onClick,
+}) => (
   <li
     className={`group cursor-pointer px-3 py-2 transition-all duration-150 flex flex-col gap-1 hover:bg-accent ${selected ? 'bg-primary' : ''} font-main`}
+
     onClick={onClick}
     style={{ minWidth: 0 }}
   >
@@ -37,3 +42,4 @@ const MessageListItem: React.FC<MessageListItemProps> = ({ email, selected, onCl
 );
 
 export default MessageListItem;
+

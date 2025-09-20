@@ -65,3 +65,9 @@ All installed packages are only available inside the virtual environment.
 
 **Note:**  
 The `node_modules`, `.next`, and `next-env.d.ts` files are ignored by git. Each collaborator must run `npm install` to set up their own local dependencies.
+
+## Current Status (Option 1 - Login Only)
+- Google OAuth login implemented
+- Backend verifies Google ID token
+- Frontend shows logged-in user’s email
+- No Gmail inbox fetch yet (planned for Option 2)

@@ -1,13 +1,19 @@
 "use client";
+
 import React, { useState } from "react";
 import Sidebar from "./components/Sidebar";
 import MessageList from "./components/MessageList";
 import AppHeader from "./components/AppHeader";
 import { Mailbox } from "./components/types";
+import Login from "./Login";
+
 export default function Home() {
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const [mailbox, setMailbox] = useState<Mailbox>("INBOX");
-  const [selected, setSelected] = useState<any>(null);
+  const [loggedInUser, setLoggedInUser] = useState<string | null>(null);
+
+  if (!loggedInUser) {
+    return <Login onLogin={(email) => setLoggedInUser(email)} />;
+  }
+
   return (
     <div className="relative font-sans min-h-screen flex flex-col">
       {/* Background image layer */}
@@ -24,8 +30,14 @@ export default function Home() {
           <MessageList mailbox={mailbox} />
         </div>
       </div>
+    {/* Login Page */}
+    <div className="font-sans min-h-screen bg-gray-50 flex flex-col">
+      <header className="bg-blue-700 text-white p-4 text-xl font-bold shadow flex items-center gap-4 h-15">
+        <span>Welcome, {loggedInUser}</span>
+      </div>
+      <main className="flex-1 flex items-center justify-center">
+        <p className="text-lg">✅ You are logged in with Google!</p>
+      </div>
     </div>
   );
 }
-
-

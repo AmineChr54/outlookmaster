@@ -5,16 +5,11 @@ import { Email, Mailbox } from "./types";
 import MessageListLeft from "./MessageListLeft";
 import MessageListRight from "./MessageListRight";
 
-// Mailboxes are now managed in Sidebar
-
 interface MessageListProps {
-  mailbox: Mailbox;
+  emails: Email[];
 }
 
-const MessageList: React.FC<MessageListProps> = ({ mailbox }) => {
-  const [emails, setEmails] = useState<Email[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+const MessageList: React.FC<MessageListProps> = ({ emails }) => {
   const [selected, setSelected] = useState<string | null>(null);
   const [reply, setReply] = useState("");
   const [sending, setSending] = useState(false);
@@ -142,4 +137,3 @@ const MessageList: React.FC<MessageListProps> = ({ mailbox }) => {
 };
 
 export default MessageList;
-
