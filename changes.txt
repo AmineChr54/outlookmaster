@@ -1,0 +1,37 @@
+# Changes made on September 21, 2025
+
+1. **Frontend/Backend Setup and Dependency Management**
+   - Fixed npm install and PowerShell execution policy issues for frontend setup.
+   - Created and configured Python virtual environment (venv) for backend.
+   - Cleaned up and deduplicated requirements.txt, added python-dotenv for .env support.
+   - Documented .env usage and dependency installation in README.md.
+
+2. **Google OAuth Integration**
+   - Updated credentials.json and .env to use the correct Google OAuth client ID and secret.
+   - Switched backend to load CLIENT_ID and CLIENT_SECRET from environment variables and .env file for security.
+   - Updated frontend Login.tsx to use the real Google OAuth client ID.
+   - Fixed audience mismatch error by syncing client ID between frontend and backend.
+
+3. **Backend Improvements**
+   - Added detailed debug logging to email_api.py for easier troubleshooting of token and request issues.
+   - Ensured CORS is configured for both localhost and 127.0.0.1.
+   - Verified backend health endpoint and fixed module import errors by installing missing dependencies.
+
+4. **Frontend UI/Logic Fixes**
+   - Refactored page.tsx for clarity and maintainability, added _mahdi comments for documentation.
+   - Fixed logic so Sidebar and MessageList always render after login.
+   - Removed the 'You are logged in with Google!' message after login for a cleaner UI.
+   - Set up default mailbox logic to avoid null errors (if needed).
+   - Updated fetch URL in Login.tsx to use localhost for better compatibility.
+
+5. **Security and Git Hygiene**
+   - Added credentials.json and .env to .gitignore to prevent secret leaks.
+   - Removed credentials.json from git tracking.
+
+6. **General Troubleshooting**
+   - Diagnosed and fixed issues with virtual environment activation, backend startup, and cross-origin requests.
+   - Provided step-by-step instructions for running and testing both backend and frontend.
+
+---
+
+For any future changes, please update this file with the date and a summary of what was changed.

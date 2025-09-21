@@ -1,3 +1,5 @@
+# Prevent secrets from being committed
+credentials.json
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]

@@ -7,7 +7,7 @@ interface LoginProps {
 }
 
 export default function Login({ onLogin }: LoginProps) {
-  const CLIENT_ID = "YOUR_WEB_OAUTH_CLIENT_ID";
+  const CLIENT_ID = "899610996955-sd4vlip7i677a3ert04k0rkh33g95bnm.apps.googleusercontent.com";
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -34,7 +34,7 @@ export default function Login({ onLogin }: LoginProps) {
       console.log("JWT token:", response.credential);
 
       try {
-        const res = await fetch("http://127.0.0.1:5000/api/fetchEmails", {
+  const res = await fetch("http://localhost:5000/api/fetchEmails", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ token: response.credential }),
