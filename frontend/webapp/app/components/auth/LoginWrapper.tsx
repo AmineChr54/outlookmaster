@@ -1,13 +1,13 @@
 "use client";
 
 import React from 'react';
-import { LoginPage } from './components/login';
+import LoginPage from './LoginPage';
 
 interface LoginProps {
   onLogin: (userEmail: string) => void;
 }
 
-export default function Login({ onLogin }: LoginProps) {
+export default function LoginWrapper({ onLogin }: LoginProps) {
   const handleLoginSuccess = (credentials: any) => {
     console.log('Login credentials:', credentials);
     

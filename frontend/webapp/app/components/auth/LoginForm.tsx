@@ -88,15 +88,6 @@ const LoginForm: React.FC<LoginFormProps> = ({
             )}
           </button>
         </form>
-
-        <div className="mt-8 text-center">
-          <p className="text-secondary text-sm">
-            Don't have an account?{' '}
-            <a href="#" className="text-primary hover:text-primary/80 transition-colors duration-200">
-              Sign up
-            </a>
-          </p>
-        </div>
       </div>
     </div>
   );

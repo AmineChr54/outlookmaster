@@ -42,4 +42,3 @@ const MessageListItem: React.FC<MessageListItemProps> = ({
 );
 
 export default MessageListItem;
-

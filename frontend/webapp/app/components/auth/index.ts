@@ -3,6 +3,7 @@ export { default as LoginPage } from './LoginPage';
 export { default as LoginForm } from './LoginForm';
 export { default as SocialLogin } from './SocialLogin';
 export { default as AdvancedLogin } from './AdvancedLogin';
+export { default as LoginWrapper } from './LoginWrapper';
 
 // Form Components
 export { default as InputField } from './InputField';
