@@ -1,6 +1,0 @@
-python-dotenv
-Flask
-Flask-Cors
-google-auth
-google-auth-oauthlib
-imap-tools
