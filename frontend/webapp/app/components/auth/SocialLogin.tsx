@@ -9,13 +9,19 @@ interface SocialLoginProps {
 const SocialLogin: React.FC<SocialLoginProps> = ({
   onGoogleLogin,
   onMicrosoftLogin,
-  isLoading = false
+  isLoading = false,
 }) => {
-  const CLIENT_ID = "899610996955-sd4vlip7i677a3ert04k0rkh33g95bnm.apps.googleusercontent.com";
+  const CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || '';
+  const BACKEND_URL = process.env.VITE_BACKEND_URL || 'http://localhost:5000/api';
 
   useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://accounts.google.com/gsi/client";
+    if (!CLIENT_ID) {
+      console.error('Google Client ID is missing in environment variables.');
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = 'https://accounts.google.com/gsi/client';
     script.async = true;
     script.defer = true;
     document.body.appendChild(script);
@@ -29,30 +35,27 @@ const SocialLogin: React.FC<SocialLoginProps> = ({
 
       // @ts-ignore
       google.accounts.id.renderButton(
-        document.getElementById("googleSignInDiv"),
-        { theme: "outline", size: "large" }
+        document.getElementById('googleSignInDiv'),
+        { theme: 'outline', size: 'large' }
       );
     };
 
     async function handleCredentialResponse(response: any) {
-      console.log("JWT token:", response.credential);
-
       try {
-        const res = await fetch("http://localhost:5000/api/fetchEmails", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ token: response.credential }),
+        const res = await fetch(`${BACKEND_URL}/emails/fetch`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ access_token: response.credential, refresh_token: '' }),
         });
 
         const data = await res.json();
-        if (data.status === "ok") {
-          console.log("User logged in:", data.email);
-          onGoogleLogin(data.email);
+        if (res.ok) {
+          onGoogleLogin(data.email || '');
         } else {
-          console.error("Error verifying login:", data.error);
+          console.error('Error verifying login:', data);
         }
       } catch (err) {
-        console.error("Failed to verify login:", err);
+        console.error('Failed to verify login:', err);
       }
     }
 
@@ -61,7 +64,7 @@ const SocialLogin: React.FC<SocialLoginProps> = ({
         document.body.removeChild(script);
       }
     };
-  }, [onGoogleLogin]);
+  }, [CLIENT_ID]);
 
   const handleGoogleClick = () => {
     // @ts-ignore
@@ -72,11 +75,11 @@ const SocialLogin: React.FC<SocialLoginProps> = ({
       console.error('Google Sign-In not loaded');
     }
   };
+
   return (
     <div className="w-full max-w-md mx-auto">
-      {/* Hidden Google Sign-In button for API */}
       <div id="googleSignInDiv" style={{ display: 'none' }}></div>
-      
+
       <div className="relative my-6">
         <div className="relative flex justify-center text-sm">
           <span className="px-2 bg-background text-muted">Or continue with</span>
@@ -116,10 +119,10 @@ const SocialLogin: React.FC<SocialLoginProps> = ({
           className="w-full flex items-center justify-center px-4 py-3 border border-border rounded-lg bg-card hover:bg-hover text-main font-medium transition-all duration-200 hover:scale-[1.02] disabled:hover:scale-100 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24">
-            <path fill="#f25022" d="M0 0h11.3v11.3H0z"/>
-            <path fill="#00a4ef" d="M12.7 0H24v11.3H12.7z"/>
-            <path fill="#7fba00" d="M0 12.7h11.3V24H0z"/>
-            <path fill="#ffb900" d="M12.7 12.7H24V24H12.7z"/>
+            <path fill="#f25022" d="M0 0h11.3v11.3H0z" />
+            <path fill="#00a4ef" d="M12.7 0H24v11.3H12.7z" />
+            <path fill="#7fba00" d="M0 12.7h11.3V24H0z" />
+            <path fill="#ffb900" d="M12.7 12.7H24V24H12.7z" />
           </svg>
           Continue with Microsoft
         </button>
