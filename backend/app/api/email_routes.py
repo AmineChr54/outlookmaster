@@ -70,6 +70,7 @@ def fetch_emails_raw():
 
             subject = msg['subject']
             from_ = msg['from']
+            date = msg['date']  # Get the date from email headers
             snippet = ''
 
             if msg.is_multipart():
@@ -84,6 +85,7 @@ def fetch_emails_raw():
                 'id': mail_id.decode(),
                 'subject': subject,
                 'from': from_,
+                'date': date,  # Include date in response
                 'snippet': snippet[:200],  # first 200 chars
             })
 

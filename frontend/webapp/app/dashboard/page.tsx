@@ -2,43 +2,19 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { AppHeader, Sidebar } from "@/app/components/email";
-
-interface Email {
-  id: string;
-  subject: string | null;
-  from: string | null;
-  snippet: string | null;
-}
+import { AppHeader, Sidebar, MessageList } from "@/app/components/email";
+import { Mailbox } from "@/app/components/email/types";
 
 export default function DashboardPage() {
   const router = useRouter();
   const [user, setUser] = useState<string | null>(null);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const [emails, setEmails] = useState<Email[]>([]);
-  const [mailbox, setMailbox] = useState("INBOX");
+  const [mailbox, setMailbox] = useState<Mailbox>("INBOX");
 
   useEffect(() => {
     // Automatically set the user as 'masteroutlook101@gmail.com' for bypass login branch
     setUser("masteroutlook101@gmail.com");
   }, []);
-
-  useEffect(() => {
-    if (!user) return;
-
-    const fetchRawEmails = async () => {
-      try {
-        const res = await fetch("http://localhost:5000/api/emails/fetch_raw");
-        if (!res.ok) throw new Error("Failed to fetch emails");
-        const data = await res.json();
-        setEmails(data);
-      } catch (err) {
-        console.error("Error loading emails:", err);
-      }
-    };
-
-    fetchRawEmails();
-  }, [user]);
 
   const logout = () => {
     setUser(null);
@@ -92,24 +68,7 @@ export default function DashboardPage() {
         </header>
         <div className="flex flex-1 overflow-hidden bg-transparent">
           <Sidebar collapsed={sidebarCollapsed} mailbox={mailbox} setMailbox={setMailbox} />
-          <div className="flex-1 p-4 bg-white rounded shadow overflow-auto">
-            <h2 className="text-xl mb-4">Emails</h2>
-            {emails.length === 0 ? (
-              <p>No emails available.</p>
-            ) : (
-              <ul className="space-y-2">
-                {emails.map((email) => (
-                  <li key={email.id} className="border border-gray-300 rounded p-3 hover:bg-gray-50 cursor-pointer">
-                    <strong>Subject:</strong> {email.subject || "(no subject)"}
-                    <br />
-                    <strong>From:</strong> {email.from || "(unknown)"}
-                    <br />
-                    <p className="truncate max-w-xl">{email.snippet}</p>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
+          <MessageList mailbox={mailbox} />
         </div>
       </div>
     </div>

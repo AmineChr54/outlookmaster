@@ -25,12 +25,23 @@ const MessageList: React.FC<MessageListProps> = ({ mailbox }) => {
     async function load() {
       setLoading(true);
       try {
-        const res = await fetch(
-          `http://localhost:5000/api/emails?mailbox=${encodeURIComponent(mailbox)}`
-        );
+        const res = await fetch("http://localhost:5000/api/emails/fetch_raw");
         if (!res.ok) throw new Error("Failed to fetch emails");
-        const data = await res.json();
-        setEmails(data);
+        const rawData = await res.json();
+        
+        // Transform the data to match our Email type
+        const transformedEmails: Email[] = rawData.map((email: any) => ({
+          id: email.id,
+          subject: email.subject || "(no subject)",
+          from: email.from || "(unknown)",
+          date: email.date || new Date().toISOString(), // Use backend date or fallback to current date
+          preview: email.snippet || "", // Map 'snippet' to 'preview'
+          body: email.snippet || "",
+          html: undefined,
+          category: undefined
+        }));
+        
+        setEmails(transformedEmails);
       } catch (err: any) {
         setError(err.message || String(err));
       } finally {
