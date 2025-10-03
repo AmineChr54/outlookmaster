@@ -63,7 +63,7 @@ def fetch_emails_raw():
         mail_ids = data[0].split()
 
         emails = []
-        for mail_id in mail_ids[-10:]:  # Get last 10 emails
+        for mail_id in mail_ids[-20:]:  # Get last 20 emails
             typ, msg_data = mail.fetch(mail_id, '(RFC822)')
             raw_email = msg_data[0][1]
             msg = email.message_from_bytes(raw_email)
