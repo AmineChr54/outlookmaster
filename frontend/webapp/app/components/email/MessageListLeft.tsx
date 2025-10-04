@@ -9,7 +9,7 @@ interface MessageListLeftProps {
 }
 
 const MessageListLeft: React.FC<MessageListLeftProps> = ({ emails, selected, onSelect }) => (
-  <div className="border-r border-border bg-card overflow-y-auto" style={{ minWidth: 220, maxWidth: 600, width: '100%' }}>
+  <div className="border-r border-border bg-card overflow-y-auto h-full" style={{ minWidth: 220, maxWidth: 600, width: '100%' }}>
     <ul className="divide-y divide-border">
       {emails.map((email) => (
         <MessageListItem

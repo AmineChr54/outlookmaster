@@ -63,7 +63,8 @@ def fetch_emails_raw():
         mail_ids = data[0].split()
 
         emails = []
-        for mail_id in mail_ids[-20:]:  # Get last 20 emails
+        # Get last 20 emails and reverse the order to show newest first
+        for mail_id in reversed(mail_ids[-20:]):
             typ, msg_data = mail.fetch(mail_id, '(RFC822)')
             raw_email = msg_data[0][1]
             msg = email.message_from_bytes(raw_email)
@@ -71,22 +72,22 @@ def fetch_emails_raw():
             subject = msg['subject']
             from_ = msg['from']
             date = msg['date']  # Get the date from email headers
-            snippet = ''
+            body = ''
 
             if msg.is_multipart():
                 for part in msg.walk():
                     if part.get_content_type() == 'text/plain':
-                        snippet = part.get_payload(decode=True).decode(errors='ignore')
+                        body = part.get_payload(decode=True).decode(errors='ignore')
                         break
             else:
-                snippet = msg.get_payload(decode=True).decode(errors='ignore')
+                body = msg.get_payload(decode=True).decode(errors='ignore')
 
             emails.append({
                 'id': mail_id.decode(),
                 'subject': subject,
                 'from': from_,
                 'date': date,  # Include date in response
-                'snippet': snippet[:200],  # first 200 chars
+                'body': body,  # Full email body content
             })
 
         mail.logout()

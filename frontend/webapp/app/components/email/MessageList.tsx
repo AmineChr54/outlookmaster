@@ -35,8 +35,8 @@ const MessageList: React.FC<MessageListProps> = ({ mailbox }) => {
           subject: email.subject || "(no subject)",
           from: email.from || "(unknown)",
           date: email.date || new Date().toISOString(), // Use backend date or fallback to current date
-          preview: email.snippet || "", // Map 'snippet' to 'preview'
-          body: email.snippet || "",
+          preview: email.body ? email.body.substring(0, 200) + "..." : "", // Create preview from body
+          body: email.body || "", // Use the full body content
           html: undefined,
           category: undefined
         }));

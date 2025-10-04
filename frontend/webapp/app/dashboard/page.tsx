@@ -23,7 +23,7 @@ export default function DashboardPage() {
 
   if (!user) {
     return (
-      <main className="min-h-screen grid place-items-center">
+      <main className="min-h-screen grid place-items-center bg-bg">
         <div className="flex items-center gap-3 text-main">
           <svg
             className="animate-spin h-6 w-6 text-primary"
@@ -52,21 +52,15 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="relative font-sans min-h-screen flex flex-col">
-      <div
-        className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/images/background_lamp.jpg')" }}
-        aria-hidden="true"
-      />
-      <div className="relative z-10 min-h-screen flex flex-col bg-transparent">
-        <AppHeader sidebarCollapsed={sidebarCollapsed} setSidebarCollapsed={setSidebarCollapsed} />
-        <header className="bg-blue-700 text-white p-4 text-xl font-bold shadow flex items-center gap-4 h-15">
-          <span>Welcome, {user}</span>
-          <button onClick={logout} className="ml-auto bg-primary text-bg px-3 py-1 rounded cursor-pointer hover:bg-accent">
-            Logout
-          </button>
-        </header>
-        <div className="flex flex-1 overflow-hidden bg-transparent">
+    <div className="relative font-sans h-screen flex flex-col overflow-hidden bg-bg">
+      <div className="relative z-10 h-full flex flex-col">
+        <AppHeader 
+          sidebarCollapsed={sidebarCollapsed} 
+          setSidebarCollapsed={setSidebarCollapsed}
+          user={user}
+          onLogout={logout}
+        />
+        <div className="flex flex-1 overflow-hidden min-h-0">
           <Sidebar collapsed={sidebarCollapsed} mailbox={mailbox} setMailbox={setMailbox} />
           <MessageList mailbox={mailbox} />
         </div>

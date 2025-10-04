@@ -3,9 +3,11 @@ import React from "react";
 interface AppHeaderProps {
   sidebarCollapsed: boolean;
   setSidebarCollapsed: (collapsed: boolean) => void;
+  user: string | null;
+  onLogout: () => void;
 }
 
-const AppHeader: React.FC<AppHeaderProps> = ({ sidebarCollapsed, setSidebarCollapsed }) => (
+const AppHeader: React.FC<AppHeaderProps> = ({ sidebarCollapsed, setSidebarCollapsed, user, onLogout }) => (
   <header className="bg-bg text-title font-main p-4 text-xl font-bold shadow flex items-center gap-4 h-15 border-b border-border">
     {/* Main menu button */}
     <button
@@ -31,7 +33,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({ sidebarCollapsed, setSidebarColla
       <input
         type="text"
         placeholder="Search mail..."
-        className="w-full px-3 py-1 rounded bg-accent text-bg placeholder:text-secondary placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-primary font-main"
+        className="w-full px-3 py-1 rounded bg-muted text-bg placeholder:text-secondary placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-primary font-main"
       />
       <button type="submit" className="ml-2 p-2 rounded hover:bg-accent focus:outline-none">
         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -39,14 +41,19 @@ const AppHeader: React.FC<AppHeaderProps> = ({ sidebarCollapsed, setSidebarColla
         </svg>
       </button>
     </form>
-    {/* User avatar/profile */}
-    <div className="ml-auto flex items-center">
-      <img
-        src="https://ui-avatars.com/api/?name=User&background=ffd60a&color=222"
-        alt="User Avatar"
-        className="h-9 w-9 rounded-full shadow-md border-2 border-primary"
-      />
-      {/* Dropdown or user menu could go here */}
+    {/* User info and logout */}
+    <div className="ml-auto flex items-center gap-3">
+      {user && (
+        <>
+          <span className="text-main text-sm">{user}</span>
+          <button 
+            onClick={onLogout} 
+            className="bg-primary text-bg px-3 py-1 rounded cursor-pointer hover:bg-accent transition-colors"
+          >
+            Logout
+          </button>
+        </>
+      )}
     </div>
   </header>
 );

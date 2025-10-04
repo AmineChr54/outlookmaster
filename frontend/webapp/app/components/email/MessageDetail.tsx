@@ -19,8 +19,6 @@ const MessageDetail: React.FC<MessageDetailProps> = ({ email, reply, sending, se
     {/* Subject and close button */}
     <div className="flex items-center justify-between mb-2">
       <h3 className="text-xl font-bold text-title flex items-center gap-2 font-heading">
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 inline-block text-title" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 01-8 0" /></svg>
-
         {email.subject}
       </h3>
       <button
@@ -35,7 +33,6 @@ const MessageDetail: React.FC<MessageDetailProps> = ({ email, reply, sending, se
 
     {/* Date */}
     <div className="text-xs text-date mb-1 flex items-center gap-1">
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 inline-block text-date" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10m-7 4h4" /></svg>
       {email.date}
     </div>
     {/* Sender info */}

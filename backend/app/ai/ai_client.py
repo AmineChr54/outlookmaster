@@ -42,4 +42,4 @@ def get_completion(prompt: str) -> str:
     return completion.choices[0].message
 
 
-print(get_completion("explain quantum computing in simple terms"))
+print(get_completion("yooo wassup"))
