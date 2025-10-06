@@ -12,10 +12,10 @@ export default function HomeRedirect() {
       if (stored) {
         router.replace('/dashboard');
       } else {
-        router.replace('/auth');
+        router.replace('/dashboard');
       }
     } catch {
-      router.replace('/auth');
+      router.replace('/dashboard');
     }
   }, [router]);
 
