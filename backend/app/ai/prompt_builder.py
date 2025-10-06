@@ -1,45 +1,53 @@
-# This file is for the AI prompt building logic.
-# For example:
-
-def create_summary_prompt(email_text: str) -> str:
-    """Creates a prompt to summarize an email."""
-    prompt = f"""
-    Please summarize the following email concisely, in points if possible.
-    Focus on the main topic and any required actions.
-
-    Email:
-    ---
-    {email_text}
-    ---
-
-    Summary:
+def create_reply_prompt(email_text: str, tone: str = "professional", length: str = "medium") -> str:
     """
+    Create a prompt for drafting a reply to an email with selectable tone and length.
+
+    Args:
+        email_text (str): The original email content to reply to.
+        tone (str): Tone of the reply. Examples: 'formal', 'casual', 'professional'.
+        length (str): Length of the reply. Examples: 'short', 'medium', 'detailed'.
+
+    Returns:
+        str: The prompt string for the AI model.
+    """
+    prompt = (
+        f"Draft a {tone}, {length} reply to the following email. "
+        f"Address the main points clearly and provide helpful responses.\n"
+        f"Email ---\n{email_text}\n--- Reply:"
+    )
     return prompt.strip()
 
-def create_reply_prompt(email_text: str, tone: str = "professional") -> str:
-    """Creates a prompt to draft a reply to an email."""
-    prompt = f"""
-    Draft a {tone} reply to the following email. Address the main points and provide clear responses.
-
-    Email:
-    ---
-    {email_text}
-    ---
-
-    Reply:
+def create_multi_tone_replies_prompt(email_text: str) -> str:
     """
+    Create a prompt to generate multiple reply drafts in different tones.
+
+    Args:
+        email_text (str): The original email content.
+
+    Returns:
+        str: The prompt string requesting multiple replies.
+    """
+    prompt = (
+        f"Generate multiple reply drafts to the following email with different tones "
+        f"(formal, casual, concise, detailed). Please provide separate replies labeled by tone.\n"
+        f"Email ---\n{email_text}\n--- Replies:"
+    )
     return prompt.strip()
 
-def create_action_items_prompt(email_text: str) -> str:
-    """Creates a prompt to extract action items from an email."""
-    prompt = f"""
-    Extract and list the action items from the following email. Be specific about what needs to be done.
-
-    Email:
-    ---
-    {email_text}
-    ---
-
-    Action Items:
+def create_autocomplete_suggestions_prompt(email_text: str, position_context: str) -> str:
     """
+    Create a prompt to suggest autocomplete phrases based on email content and cursor position.
+
+    Args:
+        email_text (str): The email content.
+        position_context (str): The text around the cursor position where suggestions are needed.
+
+    Returns:
+        str: The prompt string requesting autocomplete suggestions.
+    """
+    prompt = (
+        f"Suggest appropriate autocomplete phrases or sentence completions for replying to the email "
+        f"based on the email content and this context:\n{position_context}\n"
+        f"Email ---\n{email_text}\n--- Suggestions:"
+    )
     return prompt.strip()
