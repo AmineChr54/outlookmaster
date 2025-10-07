@@ -21,23 +21,24 @@ const AppHeader: React.FC<AppHeaderProps> = ({ sidebarCollapsed, setSidebarColla
       </svg>
     </button>
     {/* Notifications icon */}
-  <button className="relative p-2 rounded hover:bg-accent focus:outline-none mx-2" aria-label="Notifications">
+    <button className="relative p-2  cursor-pointer rounded hover:bg-accent focus:outline-none mx-2" aria-label="Notifications">
       <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
       </svg>
       {/* Notification dot */}
-  <span className="absolute top-1 right-1 block h-2 w-2 rounded-full bg-primary"></span>
+      <span className="absolute top-1 right-1 block h-2 w-2 rounded-full bg-primary"></span>
     </button>
     {/* Search bar */}
-    <form className="flex-1 flex items-center max-w-md mx-4" onSubmit={e => e.preventDefault()}>
+    <form className="flex-1 flex items-center max-w-md mx-4 gap-3 p-1 rounded-lg bg-field border border-border focus-within:border-primary transition-colors" onSubmit={e => e.preventDefault()}>
       <input
-        type="text"
-        placeholder="Search mail..."
-        className="w-full px-3 py-1 rounded bg-muted text-bg placeholder:text-secondary placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-primary font-main"
+      type="text"
+      placeholder="Search mail..."
+      className="w-full px-3 py-1 rounded bg-transparent text-main text-xs placeholder:text-text-muted placeholder:text-xs focus:outline-none font-body resize-none outline-none bg-transparent"
       />
-      <button type="submit" className="ml-2 p-2 rounded hover:bg-accent focus:outline-none">
+      <button type="submit" className="ml-2 p-2 rounded hover:bg-accent cursor-pointer focus:outline-none">
         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4-4m0 0A7 7 0 1010 17a7 7 0 007-7z" />
+          <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" fill="none"/>
+          <line x1="16.65" y1="16.65" x2="21" y2="21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
         </svg>
       </button>
     </form>
@@ -48,7 +49,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({ sidebarCollapsed, setSidebarColla
           <span className="text-main text-sm">{user}</span>
           <button 
             onClick={onLogout} 
-            className="bg-primary text-bg px-3 py-1 rounded cursor-pointer hover:bg-accent transition-colors"
+            className="bg-primary text-bg text-sm px-3 py-1 rounded cursor-pointer hover:bg-accent transition-colors"
           >
             Logout
           </button>

@@ -66,7 +66,7 @@ const MAILBOXES: { key: Mailbox; label: string; icon: React.ReactNode }[] = [
 
 const Sidebar: React.FC<SidebarProps> = ({ collapsed = false, mailbox, setMailbox }) => {
   return (
-  <aside className={`bg-bg text-main font-main border-r border-border flex flex-col p-4 gap-4 transition-all duration-300 ${collapsed ? 'w-20' : 'w-64'}`}>
+  <aside className={`bg-bg text-main font-main border-r border-border flex flex-col p-4 gap-4 transition-all duration-300 ${collapsed ? 'w-20' : 'w-45'}`}>
       <nav className="flex flex-col gap-2">
         {MAILBOXES.map((item) => (
           <button
@@ -82,8 +82,8 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed = false, mailbox, setMailbo
       </nav>
       <div className="mt-auto">
         <button className={`w-full cursor-pointer bg-primary text-bg py-2 rounded hover:bg-accent font-semibold transition-all duration-300 ${collapsed ? 'px-0 flex justify-center' : ''}`} title={collapsed ? "New Message" : undefined}>
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
-          {!collapsed && <span className="ml-2">New Message</span>}
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
+          {!collapsed && <span className="ml-2 text-xs">New Message</span>}
         </button>
       </div>
     </aside>

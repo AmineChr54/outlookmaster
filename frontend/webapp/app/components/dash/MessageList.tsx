@@ -14,8 +14,6 @@ const MessageList: React.FC<MessageListProps> = ({ mailbox }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
-  const [reply, setReply] = useState("");
-  const [sending, setSending] = useState(false);
   // Resizable panel state
   const [panelWidth, setPanelWidth] = useState<number>(340); // px
   const [isResizing, setIsResizing] = useState(false);
@@ -133,18 +131,6 @@ const MessageList: React.FC<MessageListProps> = ({ mailbox }) => {
       {/* Right column: email details and reply panel */}
       <MessageListRight
         selectedEmail={selectedEmail}
-        reply={reply}
-        sending={sending}
-        setReply={setReply}
-        onClose={() => setSelected(null)}
-        onSend={() => {
-          setSending(true);
-          setTimeout(() => {
-            alert("Reply sent!");
-            setReply("");
-            setSending(false);
-          }, 1000);
-        }}
       />
     </div>
   );

@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { AppHeader, Sidebar, MessageList } from "@/app/components/email";
-import { Mailbox } from "@/app/components/email/types";
+import { AppHeader, Sidebar, MessageList } from "@/app/components/dash";
+import { Mailbox } from "@/app/components/dash/types";
 
 export default function DashboardPage() {
   const router = useRouter();
