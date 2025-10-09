@@ -1,8 +1,12 @@
 import React from "react";
 
-const MessageSummary = () => (
+interface MessageSummaryProps {
+  summary: string;
+}
+
+const MessageSummary: React.FC<MessageSummaryProps> = ({ summary }) => (
   <div className="p-4 border-l border-border">
-    <p className="text-main">This is a placeholder for the email summary.</p>
+    <p className="text-main">{summary}</p>
   </div>
 );
 
