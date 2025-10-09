@@ -51,3 +51,17 @@ def create_autocomplete_suggestions_prompt(email_text: str, position_context: st
         f"Email ---\n{email_text}\n--- Suggestions:"
     )
     return prompt.strip()
+
+def create_summary_prompt(email_text: str) -> str:
+    """
+    Create a prompt to summarize an email's content.
+    Args:
+        email_text (str): The original email content.
+    Returns:
+        str: The prompt string requesting a summary.
+    """
+    prompt = (
+        f"Summarize the main points of the following email in a concise, clear paragraph.\n"
+        f"Email ---\n{email_text}\n--- Summary:"
+    )
+    return prompt.strip()
