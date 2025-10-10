@@ -10,10 +10,16 @@ interface EmailReplyContainerProps {
   emailSubject: string;
   emailTone: string;
   emailLength: string;
+  // Controlled draft from parent
+  draft: string;
+  onDraftChange: (value: string) => void;
+  // Optional key to force refetch on submit clicks even if prompt text is unchanged
+  submitKey?: number;
+  // Optional callback to clear prompt in parent after successful generation
+  onPromptConsumed?: () => void;
 }
 
-const EmailReplyContainer: React.FC<EmailReplyContainerProps> = ({ emailText, promptText, emailSender, emailDate, emailSubject, emailTone, emailLength }) => {
-  const [reply, setReply] = useState<string | null>(null);
+const EmailReplyContainer: React.FC<EmailReplyContainerProps> = ({ emailText, promptText, emailSender, emailDate, emailSubject, emailTone, emailLength, draft, onDraftChange, submitKey, onPromptConsumed }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -21,24 +27,27 @@ const EmailReplyContainer: React.FC<EmailReplyContainerProps> = ({ emailText, pr
     let aborted = false;
     const run = async () => {
       if (!emailText) {
-        setReply(null);
+        onDraftChange("");
         return;
       }
       setLoading(true);
       setError(null);
       try {
-        const response = await fetch("http://localhost:5000/api/ai/reply", {
+        const response = await fetch("http://localhost:5000/api/ai/generate_reply", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ text: emailText, prompt: promptText, from: emailSender, date: emailDate, subject: emailSubject, tone: emailTone, length: emailLength }),
         });
         if (!response.ok) throw new Error("Failed to fetch reply");
         const data = await response.json();
-        if (!aborted) setReply(data.reply || "");
+        if (!aborted) {
+          onDraftChange(data.reply || "");
+          if (onPromptConsumed) onPromptConsumed();
+        }
       } catch (err) {
         if (!aborted) {
           setError((err as Error).message || "Unknown error");
-          setReply(null);
+          onDraftChange("");
         }
       } finally {
         if (!aborted) setLoading(false);
@@ -48,16 +57,13 @@ const EmailReplyContainer: React.FC<EmailReplyContainerProps> = ({ emailText, pr
     return () => {
       aborted = true;
     };
-  }, [emailText]);
+  }, [submitKey]);
 
   return (
     <div className="mt-4">
-      {loading && <Loading />}
+      {loading && <Loading message="Generating reply..." size={6} />}
       {error && <p className="text-red-600">Error: {error}</p>}
-      {reply && <MessageReply reply={reply} />}
-      {!reply && !loading && !error && (
-        <MessageReply reply="This is a placeholder for the email reply." />
-      )}
+      {!loading && !error && <MessageReply draft={draft} onDraftChange={onDraftChange} initialReceiver={emailSender} />}
     </div>
   );
 };

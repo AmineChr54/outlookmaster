@@ -6,6 +6,7 @@ import PromptSubmit from "./buttons/PromptSubmit";
 interface PromptFieldProps {
   prompt: string;
   onPromptChange: (value: string) => void;
+  onPromptSubmit: () => void;
   tone: string;
   onToneChange: (value: string) => void;
   length: string;
@@ -15,6 +16,7 @@ interface PromptFieldProps {
 const PromptField: React.FC<PromptFieldProps> = ({
   prompt,
   onPromptChange,
+  onPromptSubmit,
   tone,
   onToneChange,
   length,
@@ -24,7 +26,7 @@ const PromptField: React.FC<PromptFieldProps> = ({
     <textarea
       className="w-full bg-transparent resize-none outline-none text-main placeholder:text-text-muted font-body"
       rows={1}
-      placeholder="What's on your mind?"
+      placeholder="Type your prompt to reply..."
       value={prompt}
       onChange={(e) => onPromptChange(e.target.value)}
     />
@@ -47,7 +49,7 @@ const PromptField: React.FC<PromptFieldProps> = ({
       <div className="flex-grow" />
       
       {/* Submit Button */}
-      <PromptSubmit onClick={() => {}} disabled={!prompt.trim()} />
+      <PromptSubmit onClick={onPromptSubmit} disabled={!prompt.trim()} />
     </div>
   </div>
 );

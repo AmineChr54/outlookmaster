@@ -27,8 +27,8 @@ def fetch_emails_from_inbox():
     return emails
 
 def send_email(recipient, subject, body):
-    sender = os.environ.get("EMAILACCOUNT")
-    password = os.environ.get("EMAILAPPPASSWORD")
+    sender = os.environ.get("EMAIL_ACCOUNT")
+    password = os.environ.get("EMAIL_APP_PASSWORD")
     if not sender or not password:
         raise ValueError("Email account credentials missing!")
 

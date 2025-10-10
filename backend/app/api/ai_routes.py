@@ -9,8 +9,8 @@ from ..ai.prompt_builder import (
 
 bp = Blueprint("ai", __name__, url_prefix="/api/ai")
 
-@bp.route("/reply", methods=["POST"])
-def reply():
+@bp.route("/generate_reply", methods=["POST"])
+def generate_reply():
     data = request.json
     email_text = data.get("text")
     prompt_text = data.get("prompt", "")
@@ -25,8 +25,8 @@ def reply():
     reply_text = get_completion(prompt)
     return jsonify({"reply": reply_text})
 
-@bp.route("/multi-tone-replies", methods=["POST"])
-def multi_tone_replies():
+@bp.route("/generate_multi_tone_replies", methods=["POST"])
+def generate_multi_tone_replies():
     data = request.json
     email_text = data.get("text")
     if not email_text:
@@ -35,8 +35,8 @@ def multi_tone_replies():
     replies = get_completion(prompt)
     return jsonify({"replies": replies})
 
-@bp.route("/autocomplete-suggestions", methods=["POST"])
-def autocomplete_suggestions():
+@bp.route("/generate_autocomplete_suggestions", methods=["POST"])
+def generate_autocomplete_suggestions():
     data = request.json
     email_text = data.get("text")
     position_context = data.get("context", "")
