@@ -1,109 +1,130 @@
 # HyperDraft
 Automatically responds to emails and more.
 
+## Overview
+HyperDraft is a two-part application:
+- Backend: Python (Flask) service that handles authentication and integrations.
+- Frontend: React/Next.js web app for user interaction.
 
-## Step-by-Step Guide: Creating a Virtual Environment and Installing Python Dependencies
+Current focus is on authentication and laying groundwork for inbox automations.
 
-1. **Install Python**  
-    Make sure Python (version 3.10 or later) is installed on your system.  
-    [Download Python](https://www.python.org/downloads/)
+## Features
+- Google OAuth login (backend verifies Google ID token)
+- Frontend displays the authenticated user’s email
+- CORS-enabled API surface for the web app
+- Planned: Gmail inbox access and automated drafting/replies
 
-2. **Create a virtual environment**  
-    Open a terminal and navigate to the project directory:  
-    ```bash
-    python -m venv venv
-    ```
+## Tech Stack
+- Backend: Python 3.10+, Flask, google-auth, google-api-python-client, python-dotenv
+- Frontend: Node.js 18+, React, Next.js
+- Tooling: npm
 
-3. **Activate the virtual environment**  
-    - **Windows:**  
-      ```bash
-      venv\Scripts\activate
-      ```
-    - **macOS/Linux:**  
-      ```bash
-      source venv/bin/activate
-      ```
+## Project Structure
+- backend/ (Python/Flask service)
+- frontend/webapp/ (Next.js application)
 
+## Prerequisites
+- Python 3.10 or later
+- Node.js 18.x or later
+- pip (bundled with Python)
+- npm (bundled with Node.js)
 
-4. **Upgrade pip (recommended)**  
-    ```bash
-    python -m pip install --upgrade pip
-    ```
+## Backend Setup
 
-5. **Set up your secrets in a .env file**  
-    In the project root, create a file named `.env` with the following content:
-    ```env
-    GOOGLE_CLIENT_ID=your-client-id-here
-    GOOGLE_CLIENT_SECRET=your-client-secret-here
-    ```
-    This file will be loaded automatically by the backend. **Never commit your .env file to git.**
+1. Create a virtual environment
+   ```bash
+   python -m venv venv
+   ```
 
-6. **Install all backend dependencies**  
-    Make sure the `requirements.txt` file is in the project folder.  
-    Install the packages with:  
-    ```bash
-    pip install -r requirements.txt
-    ```
+2. Activate the virtual environment
+   - Windows:
+     ```bash
+     venv\Scripts\activate
+     ```
+   - macOS/Linux:
+     ```bash
+     source venv/bin/activate
+     ```
 
-    This will install:
-    - Flask
-    - flask-cors
-    - google-auth
-    - google-auth-oauthlib
-    - google-api-python-client
-    - blinker
-    - click
-    - colorama
-    - dotenv
-    - itsdangerous
-    - Jinja2
-    - MarkupSafe
-    - python-dotenv (for .env support)
-    - Werkzeug
+3. Upgrade pip (recommended)
+   ```bash
+   python -m pip install --upgrade pip
+   ```
 
-    If you encounter errors, ensure you have the latest version of pip and setuptools:
-    ```bash
-    pip install --upgrade pip setuptools
-    ```
+4. Install dependencies
+   Ensure `requirements.txt` is present, then:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-7. **Deactivate the environment**  
-    When you're done, you can leave the environment with:  
-    ```bash
-    deactivate
-    ```
+   This installs (among others):
+   - Flask
+   - flask-cors
+   - google-auth
+   - google-auth-oauthlib
+   - google-api-python-client
+   - blinker
+   - click
+   - colorama
+   - dotenv
+   - itsdangerous
+   - Jinja2
+   - MarkupSafe
+   - python-dotenv
+   - Werkzeug
 
-**Note:**  
-All installed packages are only available inside the virtual environment. If you add new dependencies, add them to `requirements.txt` and re-run the install command above. Your secrets should always be stored in `.env` and never committed to git.
+   If you encounter errors:
+   ```bash
+   pip install --upgrade pip setuptools
+   ```
 
-## Step-by-Step Guide: Setting Up the Frontend (React & Next.js)
+5. Configure environment variables
+   - Create a `.env` file in the project root and add the required keys for local development.
+   - These values are loaded automatically by the backend.
+   - Never commit secrets. Ensure `.env` is ignored by git.
 
-1. **Install Node.js**  
-    Make sure Node.js (version 18.x or later) is installed.  
-    [Download Node.js](https://nodejs.org/)
+6. Deactivate the environment (when finished)
+   ```bash
+   deactivate
+   ```
 
-2. **Navigate to the frontend directory**  
-    Change to your frontend project folder (e.g., `frontend`):  
-    ```bash
-    cd frontend\webapp
-    ```
+Notes:
+- Packages are only available inside the virtual environment.
+- If you add new dependencies, update `requirements.txt` and re-run the install command.
 
-3. **Install dependencies**  
-    Run the following command to install all required packages (including React and Next.js):  
-    ```bash
-    npm install
-    ```
+## Frontend Setup (React & Next.js)
 
-4. **Start the development server**  
-    Launch the web application locally:  
-    ```bash
-    npm run dev
-    ```
+1. Navigate to the frontend directory
+   ```bash
+   cd frontend/webapp
+   ```
 
-**Note:**  
-The `node_modules`, `.next`, and `next-env.d.ts` files are ignored by git. Each collaborator must run `npm install` to set up their own local dependencies.
+2. Install dependencies
+   ```bash
+   npm install
+   ```
 
-## Current Status (Option 1 - Login Only)
-- Google OAuth login implemented
-- Backend verifies Google ID token
-- Frontend shows logged-in user’s email
-- No Gmail inbox fetch yet (planned for Option 2)
+3. Start the development server
+   ```bash
+   npm run dev
+   ```
+
+Notes:
+- `node_modules`, `.next`, and `next-env.d.ts` are ignored by git.
+- Each collaborator should run `npm install` locally.
+
+## Running the App
+- Start the backend server using your project’s entry point (e.g., `python app.py` or `flask run`), depending on how your app is structured.
+- Start the frontend as shown above (`npm run dev`).
+- Visit the frontend URL (commonly http://localhost:3000) to sign in and test flows.
+
+## Contributing
+- Open issues and pull requests are welcome.
+- Please avoid committing any secrets or personal tokens.
+
+## Security
+- Do not commit `.env` or other secret files.
+- Use a secrets manager in production deployments.
+
+## License
+TBD
