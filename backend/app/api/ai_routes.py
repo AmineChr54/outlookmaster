@@ -13,11 +13,15 @@ bp = Blueprint("ai", __name__, url_prefix="/api/ai")
 def reply():
     data = request.json
     email_text = data.get("text")
+    prompt_text = data.get("prompt", "")
     tone = data.get("tone", "professional")
     length = data.get("length", "medium")
+    sender = data.get("from")
+    date = data.get("date")
+    subject = data.get("subject")
     if not email_text:
         return jsonify({"error": "Email text for reply is required"}), 400
-    prompt = create_reply_prompt(email_text, tone, length)
+    prompt = create_reply_prompt(email_text, prompt_text, tone, length, sender, date, subject)
     reply_text = get_completion(prompt)
     return jsonify({"reply": reply_text})
 

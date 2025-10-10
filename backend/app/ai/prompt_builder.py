@@ -1,4 +1,4 @@
-def create_reply_prompt(email_text: str, tone: str = "professional", length: str = "medium") -> str:
+def create_reply_prompt(email_text, prompt_text, tone, length, sender, date, subject) -> str:
     """
     Create a prompt for drafting a reply to an email with selectable tone and length.
 
@@ -13,6 +13,10 @@ def create_reply_prompt(email_text: str, tone: str = "professional", length: str
     prompt = (
         f"Draft a {tone}, {length} reply to the following email. "
         f"Address the main points clearly and provide helpful responses.\n"
+        f"Sender: {sender}\n"
+        f"Date: {date}\n"
+        f"Subject: {subject}\n"
+        f"Prompt: {prompt_text}\n"
         f"Email ---\n{email_text}\n--- Reply:"
     )
     return prompt.strip()

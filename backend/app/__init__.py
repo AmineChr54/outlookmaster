@@ -30,10 +30,12 @@ def create_app():
 
     from .api.auth_routes import bp as auth_bp
     from .api.email_routes import bp as email_bp
+    from .api.ai_routes import bp as ai_bp
 
-    # Register blueprints with prefixes
-    app.register_blueprint(auth_bp, url_prefix='/api/auth')
-    app.register_blueprint(email_bp, url_prefix='/api/emails')
+    # Register blueprints (blueprints already define their own url_prefix)
+    app.register_blueprint(auth_bp)
+    app.register_blueprint(email_bp)
+    app.register_blueprint(ai_bp)
     
     @app.route('/')
     def index():

@@ -72,3 +72,56 @@ def forward():
         return jsonify({"message": "Email forwarded successfully"})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+# New route to fetch emails raw using IMAP with email and app password from env
+@bp.route('/fetch_raw', methods=['GET'])
+def fetch_emails_raw():
+    EMAIL_ACCOUNT = os.getenv('EMAIL_ACCOUNT')
+    EMAIL_APP_PASSWORD = os.getenv('EMAIL_APP_PASSWORD')
+
+    if not EMAIL_ACCOUNT or not EMAIL_APP_PASSWORD:
+        return jsonify({"error": "Email account or app password not configured"}), 500
+
+    try:
+        mail = imaplib.IMAP4_SSL('imap.gmail.com')
+        mail.login(EMAIL_ACCOUNT, EMAIL_APP_PASSWORD)
+        mail.select('inbox')
+
+        typ, data = mail.search(None, 'ALL')
+        mail_ids = data[0].split()
+
+        emails = []
+        # Get last 20 emails and reverse the order to show newest first
+        for mail_id in reversed(mail_ids[-20:]):
+            typ, msg_data = mail.fetch(mail_id, '(RFC822)')
+            raw_email = msg_data[0][1]
+            msg = email.message_from_bytes(raw_email)
+
+            subject = msg['subject']
+            from_ = msg['from']
+            date = msg['date']  # Get the date from email headers
+            body = ''
+
+            if msg.is_multipart():
+                for part in msg.walk():
+                    if part.get_content_type() == 'text/plain':
+                        body = part.get_payload(decode=True).decode(errors='ignore')
+                        break
+            else:
+                body = msg.get_payload(decode=True).decode(errors='ignore')
+
+            emails.append({
+                'id': mail_id.decode(),
+                'subject': subject,
+                'from': from_,
+                'date': date,  # Include date in response
+                'body': body,  # Full email body content
+            })
+
+        mail.logout()
+        return jsonify(emails)
+
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return jsonify({"error": "Failed to fetch emails", "details": str(e)}), 500

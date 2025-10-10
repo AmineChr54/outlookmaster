@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import SendReplyButton from "./buttons/SendReplyButton";
 
-const MessageReply = () => {
+interface MessageReplyProps {
+  reply: string;
+}
+
+const MessageReply: React.FC<MessageReplyProps> = ({ reply }) => {
   const [replyText, setReplyText] = useState("");
   const [sending, setSending] = useState(false);
 
@@ -23,7 +27,7 @@ const MessageReply = () => {
         className="w-full bg-transparent resize-none outline-none text-main placeholder:text-text-muted font-body"
         rows={6}
         placeholder="Type your reply..."
-        value={replyText}
+        value={replyText || reply}
         onChange={(e) => setReplyText(e.target.value)}
       />
       <SendReplyButton 

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AppHeader, Sidebar, MessageList } from "@/app/components/dash";
 import { Mailbox } from "@/app/components/dash/types";
+import Loading from "../components/common/Loading";
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -24,29 +25,7 @@ export default function DashboardPage() {
   if (!user) {
     return (
       <main className="min-h-screen grid place-items-center bg-bg">
-        <div className="flex items-center gap-3 text-main">
-          <svg
-            className="animate-spin h-6 w-6 text-primary"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <circle
-              className="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              strokeWidth="4"
-            />
-            <path
-              className="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-            />
-          </svg>
-          <span>Loading dashboard...</span>
-        </div>
+        <Loading message="Loading Dashboard..." className="" size={20} />
       </main>
     );
   }
