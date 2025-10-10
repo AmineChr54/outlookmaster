@@ -2,6 +2,7 @@ import React from "react";
 import ToneSelect from "./selectors/ToneSelect";
 import LengthSelect from "./selectors/LengthSelect";
 import PromptSubmit from "./buttons/PromptSubmit";
+import AutoResizeTextarea from "../common/AutoResizeTextarea";
 
 interface PromptFieldProps {
   prompt: string;
@@ -23,12 +24,13 @@ const PromptField: React.FC<PromptFieldProps> = ({
   onLengthChange,
 }) => (
   <div className="flex flex-col gap-3 p-3 rounded-lg bg-field border border-border focus-within:border-primary transition-colors">
-    <textarea
+    <AutoResizeTextarea
       className="w-full bg-transparent resize-none outline-none text-main placeholder:text-text-muted font-body"
-      rows={1}
+      minRows={1}
+      maxRows={5}
       placeholder="Type your prompt to reply..."
       value={prompt}
-      onChange={(e) => onPromptChange(e.target.value)}
+      onChange={onPromptChange}
     />
     <div className="flex items-center gap-2">
       {/* Left-aligned controls */}

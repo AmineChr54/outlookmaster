@@ -60,7 +60,7 @@ const EmailReplyContainer: React.FC<EmailReplyContainerProps> = ({ emailText, pr
   }, [submitKey]);
 
   return (
-    <div className="mt-4">
+    <div>
       {loading && <Loading message="Generating reply..." size={6} />}
       {error && <p className="text-red-600">Error: {error}</p>}
       {!loading && !error && <MessageReply draft={draft} onDraftChange={onDraftChange} initialReceiver={emailSender} />}

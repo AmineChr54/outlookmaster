@@ -47,7 +47,7 @@ const EmailSummaryContainer: React.FC<EmailSummaryContainerProps> = ({ emailText
 
   return (
     <div className="mt-4">
-      {loading && <Loading />}
+      {loading && <Loading size={6} />}
       {error && <p className="text-red-600">Error: {error}</p>}
       {summary && <MessageSummary summary={summary} />}
       {!summary && !loading && !error && (

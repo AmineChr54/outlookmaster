@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import AutoResizeTextarea from "../common/AutoResizeTextarea";
 import SendReplyButton from "./buttons/SendReplyButton";
 interface MessageReplyProps {
   draft: string;
@@ -90,12 +91,16 @@ const MessageReply: React.FC<MessageReplyProps> = ({draft, onDraftChange, initia
           onChange={(e) => setSubject(e.target.value)}
         />
       </div>
-      <textarea
+      <AutoResizeTextarea
         className="w-full bg-transparent resize-none outline-none text-main placeholder:text-text-muted font-body"
-        rows={6}
+        minRows={6}
+        maxRows={13}
         placeholder="Type your reply..."
         value={replyText}
-        onChange={handleReplyChange}
+        onChange={(val) => {
+          setReplyText(val);
+          onDraftChange(val);
+        }}
       />
       <SendReplyButton 
         onClick={handleSendReply}
