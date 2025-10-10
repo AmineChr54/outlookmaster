@@ -2,7 +2,7 @@ import os
 from huggingface_hub import InferenceClient
 
 # Initialize client using HuggingFace token from environment variable
-client = InferenceClient(token=os.getenv("HUGGINGFACE_TOKEN"))
+client = InferenceClient(token=os.getenv("HUGGING_FACE_TOKEN"))
 
 def get_completion(prompt: str) -> str:
     completion = client.chat.completions.create(
