@@ -1,4 +1,4 @@
-# outlookmaster
+# HyperDraft
 Automatically responds to emails and more.
 
 
